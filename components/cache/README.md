@@ -12,7 +12,7 @@ components:
   redis:
     rds:
         # redis名称
-      - name: risk
+      - name: test
         # 集群节点
         nodes:
           - 192.168.155.81:7378
@@ -22,7 +22,7 @@ components:
           - 192.168.155.82:7379
           - 192.168.155.235:7379
         # 密码
-        password: risk
+        password: test
         # 连接池配置
         pool:
           maxIdle: 10

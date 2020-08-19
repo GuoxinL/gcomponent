@@ -21,6 +21,7 @@ type Configuration struct {
 	applicationFile      viper.Viper
 	environmentDirectory string
 	profile              string
+	directoryName        string
 }
 
 func (this *Configuration) Initialize(params ...interface{}) interface{} {
@@ -58,13 +59,19 @@ func GetApplicationFile() viper.Viper {
 }
 
 func (this *Configuration) initProfile() {
-	flag.StringVar(&this.profile, "profile", "dev", "this is #")
+	flag.StringVar(&this.profile, "profile", "", "this is #")
+	flag.StringVar(&this.directoryName, "dir", components.ConfigDirectory, "this is #")
 	envflag.Parse()
-	//The following profiles are active: dev
 }
 
 func (this *Configuration) initApplicationFile() {
-	this.environmentDirectory = components.ConfigDirectory + components.B + this.profile + components.B
+	// 如果没有传入profile则不区分环境文件夹
+	if len(this.profile) == 0 {
+		this.environmentDirectory = this.directoryName + components.B
+	} else {
+		this.environmentDirectory = this.directoryName + components.B + this.profile + components.B
+	}
+
 	location := this.environmentDirectory + components.ApplicationFile
 
 	configType := location[strings.LastIndex(location, ".")+1:]
