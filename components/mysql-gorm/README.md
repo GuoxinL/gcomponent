@@ -11,18 +11,17 @@ import (
 components:
   mysql:
     dataSources:
-        # 连接名称在在吗中可以调用GetInstance("indicatorsys")获得实例
-      - name: indicatorsys
-        url: 192.168.145.151:3306
-        database: indicatorsys_test_docker
+      - name: test1
+        url: 127.0.0.1:3306
+        database: test1
         username: mysql
         password: mysql
         MaxIdleConns: 100
         MaxOpenConns: 10
         ConnMaxLifetime: 60
-      - name: vesta
-        url: 192.168.155.178:3306
-        database: vesta_test
+      - name: test
+        url: 127.0.0.1:3306
+        database: test
         username: root
         password: mysql
         MaxIdleConns: 100

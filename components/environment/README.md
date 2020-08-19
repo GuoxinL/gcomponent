@@ -26,9 +26,9 @@ import (
 
 4. 环境变量参数
 ```
-./vesta-feature --profile=dev
+./main --profile=dev
 ```
-vesta-feature 是golang二进制包
+main 是golang二进制包
 profile的类型：
 建议使用`dev`,`uat`,`pro`也可自定义环境名字，和环境名称一致即可
 

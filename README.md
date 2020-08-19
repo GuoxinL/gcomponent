@@ -8,9 +8,9 @@ import _ "github.com/GuoxinL/gcomponent/components/environment"
 ```
 2. 二进制包环境变量配置  
 ```
-vesta-feature --profile=dev
+./main --profile=dev
 ```
-vesta-feature 是golang二进制包
+main 是golang二进制包
 profile的类型：
 建议使用`dev`,`uat`,`pro`也可自定义环境名字，多环境文件夹中会提到
 

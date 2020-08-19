@@ -75,7 +75,7 @@ type DemoMessage struct {
 /**
 Example
 wechat_warning.SendMessage(wechat_warning.MessageTemplate{
-	Title:       "[VESTA]定时拉取特征信息错误",
+	Title:       "标题",
 	MessageType: wechat_warning.Markdown,
 	Message: wechat_warning.DemoMessage{
 		ErrorMessage:  "我错了",
@@ -85,7 +85,7 @@ wechat_warning.SendMessage(wechat_warning.MessageTemplate{
 	},
 })
 实际打印：
-[VESTA]定时拉取特征信息错误
+标题
  异常信息: 我错了
  异常码: 3.2137839213891e+13
  接口名称: 测试接口
