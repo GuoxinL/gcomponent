@@ -1,0 +1,59 @@
+# 日志组件(logging)
+## 如何引用
+1. 代码
+```go
+import (
+    _ "github.com/GuoxinL/gcomponent/components/logging"
+)
+```
+2. 配置文件
+application.yaml
+```yaml
+components:
+  logging:
+    filename: logging.xml
+```
+logging.xml
+```xml
+<logging>
+    <filter enabled="true">
+        <tag>stdout</tag>
+        <type>console</type>
+        <!-- level is (:?FINEST|FINE|DEBUG|TRACE|INFO|WARNING|ERROR) -->
+        <level>DEBUG</level>
+    </filter>
+    <filter enabled="true">
+        <tag>file</tag>
+        <type>file</type>
+        <!-- level is (:?FINEST|FINE|DEBUG|TRACE|INFO|WARNING|ERROR) -->
+        <level>DEBUG</level>
+        <property name="filename">logs/sys/sys_error.engineonline.log</property>
+        <!--
+           %T - Time (15:04:05 MST)
+           %t - Time (15:04)
+           %D - Date (2006/01/02)
+           %d - Date (01/02/06)
+           %L - Level (FNST, FINE, DEBG, TRAC, WARN, EROR, CRIT)
+           %S - Source
+           %M - Message
+           It ignores unknown format strings (and removes them)
+           Recommended: "[%D %T] [%L] (%S) %M"
+        -->
+        <property name="format">[%D %T] [%L] (%S) %M</property>
+        <!--
+             Create a new log if exceeding maxsize
+             New log file name will be suffix with .000 .001 .002 ...
+        -->
+        <property name="maxsize">0M</property> <!-- \d+[KMG]? Suffixes are in terms of 2**10 -->
+        <!--
+             Create a new log in every duration.
+             H - hour, log file name will be xxx.YYYY-MM-DD-HH.000
+             D - day, log file name will be xxx.YYYY-MM-DD.000
+             P - permant, keep single log file, log file name will be xxx.000
+        -->
+        <property name="duration">D</property>
+    </filter>
+</logging>
+```
+## 如何使用
+### wrapper.go 文件中的API都可以进行调用

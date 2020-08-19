@@ -1,0 +1,49 @@
+components:
+  logging:
+    filename: logging.xml
+  web:
+    port: 8080
+  mysql:
+    dbs:
+      - name: test
+        password: mysql
+        username: mysql
+        database: test
+        url: 127.0.0.1:3306
+        MaxIdleConns: 100
+        MaxOpenConns: 10
+        ConnMaxLifetime: 60
+      - name: test1
+        password: mysql
+        username: mysql
+        database: test1
+        url: 127.0.0.1:3306
+        active: 100
+        idle: 10
+        idleTimeout: 60
+  redis:
+    rds:
+      - name: risk
+        nodes:
+          - 127.0.0.1:6379
+          - 127.0.0.1:6380
+          - 127.0.0.1:6381
+          - 127.0.0.1:6382
+          - 127.0.0.1:6383
+          - 127.0.0.1:6384
+        password: risk
+        pool:
+          maxIdle: 10
+          idleTimeout: 240
+          maxConnLifetime: 300
+        connection:
+          readTimeout: 50
+          writeTimeout: 50
+          connectTimeout: 50
+  wechat-warning:
+    url: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=XXX
+    enable: true
+  optimize:
+    pprof:
+      port: 19190
+      enable: true
