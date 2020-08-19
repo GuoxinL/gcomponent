@@ -1,7 +1,7 @@
 /*
    Created by guoxin in 2020/6/5 10:48 上午
 */
-package wechat_warning
+package warning_wechat
 
 import (
 	"fmt"
