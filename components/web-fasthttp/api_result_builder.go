@@ -7,7 +7,7 @@ import (
 )
 
 type result0 struct {
-	Code    int32       `json:"code"`
+	Code    int         `json:"code"`
 	Message string      `json:"message"`
 	Data    interface{} `json:"data,omitempty"`
 	ctx     *fasthttp.RequestCtx
@@ -29,16 +29,16 @@ func (this result0) Ctx(ctx *fasthttp.RequestCtx) result0 {
 /*
 build code and message
 */
-func (this result0) BuildCodeMessage(code int32, msg string) {
+func (this result0) BuildCodeMessage(code int, msg string) {
 	this.Code = code
 	this.Message = msg
 	this.response()
 }
 
 /*
-build resultCode
+build ResultStatus
 */
-func (this result0) BuildResultCode(resultCode resultCode) {
+func (this result0) BuildResultStatus(resultCode ResultStatus) {
 	this.Code = resultCode.Code
 	this.Message = resultCode.Message
 	this.response()
@@ -47,7 +47,7 @@ func (this result0) BuildResultCode(resultCode resultCode) {
 /*
 build code, message and data
 */
-func (this result0) Build0(code int32, message string, data interface{}) {
+func (this result0) Build0(code int, message string, data interface{}) {
 	this.Code = code
 	this.Message = message
 	this.Data = data
