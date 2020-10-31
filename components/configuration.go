@@ -51,7 +51,7 @@ const (
 	/**
 	  配置文件目录
 	*/
-	ConfigDirectory = "resource"
+	ConfigDirectory = "conf"
 	/*
 	   配置文件名称
 	*/
