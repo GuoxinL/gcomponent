@@ -25,7 +25,7 @@ type Configuration struct {
 func (this *Configuration) Initialize(params ...interface{}) interface{} {
 	err := environment.GetConfig("components.mysql", &this)
 	if err != nil {
-		logging.Exitf("组件[Mysql]读取配置异常, 退出程序！！！\n异常信息: %v", err.Error())
+		logging.Exitf("GComponent [Mysql]读取配置异常, 退出程序！！！\n异常信息: %v", err.Error())
 	}
 	instanceMap := newDbInstanceMap()
 	for _, dataSource := range this.DataSources {
@@ -33,7 +33,7 @@ func (this *Configuration) Initialize(params ...interface{}) interface{} {
 		db, err := gorm.Open("mysql", url)
 
 		if err != nil {
-			logging.Exitf("组件[Mysql]数据库连接失败, 退出程序！！！\n异常信息: %v, dsn:%v, errorDetail:%v", err.Error(), dataSource.Url, err.Error())
+			logging.Exitf("GComponent [Mysql]数据库连接失败, 退出程序！！！\n异常信息: %v, dsn:%v, errorDetail:%v", err.Error(), dataSource.Url, err.Error())
 			return nil
 		}
 		db.SingularTable(true)
@@ -42,14 +42,14 @@ func (this *Configuration) Initialize(params ...interface{}) interface{} {
 		db.DB().SetMaxOpenConns(dataSource.MaxOpenConns)
 		db.DB().SetConnMaxLifetime(time.Duration(dataSource.ConnMaxLifetime) * time.Second)
 		instanceMap.Put(dataSource.Name, db)
-		logging.Info("组件[Mysql]Name：%v", dataSource.Name)
-		logging.Info("组件[Mysql]Username: %v, Password: %v", dataSource.Username, dataSource.Password)
-		logging.Info("组件[Mysql]URL：%v", dataSource.Url+"/"+dataSource.Database)
-		logging.Info("组件[Mysql]MaxIdleConns：%v, MaxOpenConns：%v, ConnMaxLifetime：%v",
+		logging.Info("GComponent [Mysql]Name：%v", dataSource.Name)
+		logging.Info("GComponent [Mysql]Username: %v, Password: %v", dataSource.Username, dataSource.Password)
+		logging.Info("GComponent [Mysql]URL：%v", dataSource.Url+"/"+dataSource.Database)
+		logging.Info("GComponent [Mysql]MaxIdleConns：%v, MaxOpenConns：%v, ConnMaxLifetime：%v",
 			dataSource.MaxIdleConns,
 			dataSource.MaxOpenConns,
 			dataSource.ConnMaxLifetime)
-		logging.Info("组件[Mysql]Connection '%v' init success", dataSource.Name)
+		logging.Info("GComponent [Mysql]Connection '%v' init success", dataSource.Name)
 	}
 	dbInstances = instanceMap
 	return nil

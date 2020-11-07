@@ -29,13 +29,13 @@ type Configuration struct {
 }
 
 func (this *Configuration) Initialize(params ...interface{}) interface{} {
-	logging.Info("组件[wechat-warning]初始化接口")
+	logging.Info("GComponent [wechat-warning]初始化接口")
 	err := environment.GetConfig("components.wechat-warning", &this)
 	if err != nil {
-		logging.Exitf("组件[wechat-warning]读取配置异常, 退出程序！！！")
+		logging.Exitf("GComponent [wechat-warning]读取配置异常, 退出程序！！！")
 	}
 	if this.Enable {
-		_ = logging.Warn("组件[wechat-warning]pprof未开启，如需开启请配置'components.wechat-warning.enable=true'")
+		_ = logging.Warn("GComponent [wechat-warning]pprof未开启，如需开启请配置'components.wechat-warning.enable=true'")
 		return nil
 	}
 	ip, err := tools.GetLocalIP()
@@ -45,7 +45,7 @@ func (this *Configuration) Initialize(params ...interface{}) interface{} {
 		this.LocalAddress = fmt.Sprint(content_field, "告警主机IP", ip)
 	}
 	warningInstances = this
-	logging.Info("组件[wechat-warning] init success")
+	logging.Info("GComponent [wechat-warning] init success")
 	return nil
 }
 
@@ -101,7 +101,7 @@ func SendMessage(mt MessageTemplate) {
 
 func (this *Configuration) SendMessage(mt MessageTemplate) {
 	if !this.Enable {
-		_ = logging.Warn("组件[wechat-warning]发送告警未开启，如需开启请配置'components.wechat-warning.enable=true'")
+		_ = logging.Warn("GComponent [wechat-warning]发送告警未开启，如需开启请配置'components.wechat-warning.enable=true'")
 		return
 	}
 	messageRequest := new(messageRequest)
@@ -118,9 +118,9 @@ func (this *Configuration) SendMessage(mt MessageTemplate) {
 
 	err := tools.Post(this.Url, messageRequest, messageResponse, 10*time.Second)
 	if err != nil {
-		logging.Error0("组件[wechat-warning]发送告警信息异常，异常信息：%v", err.Error())
+		logging.Error0("GComponent [wechat-warning]发送告警信息异常，异常信息：%v", err.Error())
 	} else {
-		_ = logging.Warn("组件[wechat-warning]发送告警信息成功! Code: %v, Message: %v", messageResponse.Code, messageResponse.Message)
+		_ = logging.Warn("GComponent [wechat-warning]发送告警信息成功! Code: %v, Message: %v", messageResponse.Code, messageResponse.Message)
 	}
 }
 

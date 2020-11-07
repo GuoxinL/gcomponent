@@ -23,29 +23,29 @@ type Configuration struct {
 	router *router.Router
 }
 
-func (this Configuration) Initialize(params ...interface{}) interface{} {
-	logging.Info("组件[web-fasthttp]初始化接口")
+func (this *Configuration) Initialize(params ...interface{}) interface{} {
+	logging.Info("GComponent [web-fasthttp]初始化接口")
 	err := environment.GetConfig("components.web", &this)
 	if err != nil {
-		logging.Exitf("组件[web-fasthttp]读取配置异常, 退出程序！！！\n异常信息: %v", err.Error())
+		logging.Exitf("GComponent [web-fasthttp]读取配置异常, 退出程序！！！\n异常信息: %v", err.Error())
 	}
 	this.router = router.New()
 	if webConfigurationInterface := params[0]; webConfigurationInterface != nil {
 		webConfiguration, ok := webConfigurationInterface.(WebRouteConfiguration)
 		if !ok {
-			_ = logging.Warn("组件[web-fasthttp]请实现 web_fasthttp.WebRouteConfiguration 接口")
+			_ = logging.Warn("GComponent [web-fasthttp]请实现 web_fasthttp.WebRouteConfiguration 接口")
 		}
 
 		webConfiguration.Configure(this.router)
 	}
 	list := this.router.List()
 	for method, paths := range list {
-		logging.Info("组件[web-fasthttp]Method %v\tPath %v", method, strings.Replace(strings.Trim(fmt.Sprint(paths), "[]"), " ", ",", -1))
+		logging.Info("GComponent [web-fasthttp]Method %v\tPath %v", method, strings.Replace(strings.Trim(fmt.Sprint(paths), "[]"), " ", ",", -1))
 	}
-	logging.Info("组件[web-fasthttp]Server init success port: %v", this.Port)
+	logging.Info("GComponent [web-fasthttp]Server init success port: %v", this.Port)
 	err = run(":"+this.Port, RequestPanicFilter(RequestInfoFilter(this.router.Handler)))
 	if err != nil {
-		logging.Exitf("组件[web-fasthttp]启动失败: %v 退出程序！！！", err.Error())
+		logging.Exitf("GComponent [web-fasthttp]启动失败: %v 退出程序！！！", err.Error())
 	}
 	return nil
 }
@@ -80,7 +80,7 @@ func RequestPanicFilter(next fasthttp.RequestHandler) fasthttp.RequestHandler {
 		tools.TryCatch{}.Try(func() {
 			next(ctx)
 		}).CatchAll(func(err error) {
-			logging.Error0("组件[web-fasthttp]请求处理异常 %v", err.Error())
+			logging.Error0("GComponent [web-fasthttp]请求处理异常 %v", err.Error())
 			Result().Ctx(ctx).Error0("请求处理异常，异常信息：" + err.Error())
 		}).Finally(func() {})
 	}

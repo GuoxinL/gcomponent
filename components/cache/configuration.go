@@ -51,7 +51,7 @@ type clusterWrapper struct {
 func (this *Configuration) Initialize(params ...interface{}) interface{} {
 	err := environment.GetConfig("components.redis", &this)
 	if err != nil {
-		logging.Exitf("组件[Mysql]读取配置异常, 退出程序！！！\n异常信息: %v", err.Error())
+		logging.Exitf("GComponent [Mysql]读取配置异常, 退出程序！！！\n异常信息: %v", err.Error())
 	}
 	redisInstances = newRedisInstanceMap()
 	for _, source := range this.RedisSources {
