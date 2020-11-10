@@ -11,6 +11,7 @@ require (
 	github.com/jinzhu/gorm v1.9.12
 	github.com/mitchellh/mapstructure v1.2.2 // indirect
 	github.com/mna/redisc v1.1.7
+	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/pelletier/go-toml v1.7.0 // indirect
 	github.com/spf13/afero v1.2.2 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
@@ -19,10 +20,12 @@ require (
 	github.com/spf13/viper v1.6.3
 	github.com/valyala/fasthttp v1.9.0
 	go.uber.org/atomic v1.4.0
+	go.uber.org/zap v1.10.0
 	golang.org/x/crypto v0.0.0-20200221231518-2aa609cf4a9d // indirect
 	golang.org/x/sys v0.0.0-20200409092240-59c9f1ba88fa // indirect
 	golang.org/x/text v0.3.2 // indirect
 	gopkg.in/ini.v1 v1.55.0 // indirect
+	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 )
 
 replace (
@@ -31,5 +34,5 @@ replace (
 	//golang.org/x/sync => github.com/golang/sync v0.0.0-20200317015054-43a5402ce75a
 	golang.org/x/sys => github.com/golang/sys v0.0.0-20200409092240-59c9f1ba88fa
 	golang.org/x/text => github.com/golang/text v0.3.2
-	//google.golang.org/protobuf => github.com/golang/protobuf v1.4.2
+//google.golang.org/protobuf => github.com/golang/protobuf v1.4.2
 )
