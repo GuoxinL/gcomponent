@@ -1,7 +1,7 @@
 /*
    Created by guoxin in 2020/4/10 11:25 上午
 */
-package components
+package core
 
 type Initialize interface {
 	/*
@@ -11,9 +11,7 @@ type Initialize interface {
 	Initialize(params ...interface{}) interface{}
 }
 
-/*
-	load() -> prefix() -> Initialize()
-*/
+// Properties.load() -> Properties.prefix() -> Initialize.Initialize()
 type Properties interface {
 	/*
 		前缀
@@ -62,5 +60,3 @@ const (
 	*/
 	ApplicationFile = ConfigFileName + S + YAML
 )
-
-const ()

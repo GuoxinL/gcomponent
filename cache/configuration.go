@@ -4,9 +4,9 @@
 package cache
 
 import (
-	"github.com/GuoxinL/gcomponent/components/environment"
-	"github.com/GuoxinL/gcomponent/components/logging"
-	"github.com/GuoxinL/gcomponent/components/tools"
+	"github.com/GuoxinL/gcomponent/environment"
+	"github.com/GuoxinL/gcomponent/logging"
+	"github.com/GuoxinL/gcomponent/tools"
 	"github.com/gomodule/redigo/redis"
 	"github.com/mna/redisc"
 	"time"
@@ -49,7 +49,7 @@ type clusterWrapper struct {
 }
 
 func (this *Configuration) Initialize(params ...interface{}) interface{} {
-	err := environment.GetConfig("components.redis", &this)
+	err := environment.GetProperty("components.redis", &this)
 	if err != nil {
 		logging.Exitf("GComponent [Mysql]读取配置异常, 退出程序！！！\n异常信息: %v", err.Error())
 	}

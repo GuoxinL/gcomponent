@@ -16,6 +16,7 @@ type StrConvert func(in string) (out interface{}, err error)
 var TypeConvert map[reflect.Kind]StrConvert
 
 func init() {
+	TypeConvert = make(map[reflect.Kind]StrConvert)
 	TypeConvert[reflect.Bool] = BoolConvert
 	TypeConvert[reflect.Int] = IntConvert
 	TypeConvert[reflect.Int8] = Int8Convert

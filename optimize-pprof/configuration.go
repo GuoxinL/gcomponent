@@ -4,8 +4,8 @@
 package optimize
 
 import (
-	"github.com/GuoxinL/gcomponent/components/environment"
-	"github.com/GuoxinL/gcomponent/components/logging"
+	"github.com/GuoxinL/gcomponent/environment"
+	"github.com/GuoxinL/gcomponent/logging"
 	"net/http"
 	_ "net/http/pprof"
 	"strconv"
@@ -22,7 +22,7 @@ type Configuration struct {
 
 func (this *Configuration) Initialize(params ...interface{}) interface{} {
 	logging.Info("GComponent [optimize-pprof]初始化接口")
-	err := environment.GetConfig("components.optimize.pprof", &this)
+	err := environment.GetProperty("components.optimize.pprof", &this)
 	if err != nil {
 		logging.Error0("GComponent [optimize-pprof]读取配置异常, 退出程序！！！")
 	}

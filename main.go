@@ -4,8 +4,8 @@
 package main
 
 import (
-	_ "github.com/GuoxinL/gcomponent/components/environment"
-	_ "github.com/GuoxinL/gcomponent/components/logging"
+	_ "github.com/GuoxinL/gcomponent/environment"
+	_ "github.com/GuoxinL/gcomponent/logging"
 )
 
 func main() {

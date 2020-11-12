@@ -5,7 +5,7 @@ package log_zap
 
 import (
 	"fmt"
-	"github.com/GuoxinL/gcomponent/components/environment"
+	"github.com/GuoxinL/gcomponent/environment"
 	"github.com/natefinch/lumberjack"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -36,7 +36,7 @@ type Configuration struct {
 }
 
 func (this *Configuration) Initialize(params ...interface{}) interface{} {
-	err := environment.GetConfig("components.log.zap", &this)
+	err := environment.GetProperty("components.log.zap", &this)
 	if err != nil {
 		panic(fmt.Sprintf("GComponent [ZAP]读取配置异常, 退出程序！！！\n异常信息: %v", err.Error()))
 	}

@@ -2,7 +2,7 @@ package web_fasthttp
 
 import (
 	"fmt"
-	"github.com/GuoxinL/gcomponent/components/tools"
+	"github.com/GuoxinL/gcomponent/tools"
 	"github.com/valyala/fasthttp"
 )
 

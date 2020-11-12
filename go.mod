@@ -5,6 +5,7 @@ go 1.13
 require (
 	github.com/fasthttp/router v1.0.1
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
+	github.com/gin-gonic/gin v1.6.3
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/gobike/envflag v0.0.0-20160830095501-ae3268980a29
 	github.com/gomodule/redigo v1.8.1

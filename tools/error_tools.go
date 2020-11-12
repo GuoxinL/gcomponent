@@ -6,7 +6,6 @@ package tools
 import (
 	"errors"
 	"fmt"
-	"github.com/GuoxinL/gcomponent/components/logging"
 	"reflect"
 	"runtime/debug"
 	"time"
@@ -32,7 +31,7 @@ func Catch() {
 		//		str += fmt.Sprintf("%v()\n\t%v:%v\n", funcName, file, line)
 		//	}
 		//}
-		logging.Error0("异常堆栈信息：\n%v\n", string(debug.Stack()))
+		fmt.Println(fmt.Errorf("异常堆栈信息：\n%v\n", string(debug.Stack())))
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -97,7 +96,7 @@ func (t TryCatch) Finally(block func()) TryCatch {
 				t.defaultCatch(err.(error))
 			}
 		}
-		logging.Error0("Panic Message: %v, Stack: %v\n", err, string(debug.Stack()))
+		fmt.Println(fmt.Errorf("Panic Message: %v, Stack: %v\n", err, string(debug.Stack())))
 	}
 	block()
 	return t

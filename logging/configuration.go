@@ -7,8 +7,8 @@ package logging
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/GuoxinL/gcomponent/components"
-	"github.com/GuoxinL/gcomponent/components/environment"
+	"github.com/GuoxinL/gcomponent/core"
+	"github.com/GuoxinL/gcomponent/environment"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -25,18 +25,18 @@ type Configuration struct {
 	Filename string
 }
 
-func (this Configuration) Initialize(params ...interface{}) interface{} {
-	err := environment.GetConfig("components.logging", &this)
+func (c Configuration) Initialize(params ...interface{}) interface{} {
+	err := environment.GetProperty("components.logging", &c)
 	if err != nil {
 		panic("组件[Logging]读取配置异常" + err.Error())
 	}
-	filePath := environment.GetEnvironmentDirectory() + this.Filename
+	filePath := environment.GetApplication().Directory() + c.Filename
 	logPath := getLogPath(filePath)
-	startsWith := strings.HasPrefix(logPath, components.B)
+	startsWith := strings.HasPrefix(logPath, core.B)
 	var fullLogPath string
 	if !startsWith {
 		wd, _ := os.Getwd()
-		fullLogPath = wd + components.B + logPath
+		fullLogPath = wd + core.B + logPath
 	} else {
 		fullLogPath = logPath
 	}

@@ -5,9 +5,9 @@ package warning_wechat
 
 import (
 	"fmt"
-	"github.com/GuoxinL/gcomponent/components/environment"
-	"github.com/GuoxinL/gcomponent/components/logging"
-	"github.com/GuoxinL/gcomponent/components/tools"
+	"github.com/GuoxinL/gcomponent/environment"
+	"github.com/GuoxinL/gcomponent/logging"
+	"github.com/GuoxinL/gcomponent/tools"
 	"time"
 )
 
@@ -30,7 +30,7 @@ type Configuration struct {
 
 func (this *Configuration) Initialize(params ...interface{}) interface{} {
 	logging.Info("GComponent [wechat-warning]初始化接口")
-	err := environment.GetConfig("components.wechat-warning", &this)
+	err := environment.GetProperty("components.wechat-warning", &this)
 	if err != nil {
 		logging.Exitf("GComponent [wechat-warning]读取配置异常, 退出程序！！！")
 	}

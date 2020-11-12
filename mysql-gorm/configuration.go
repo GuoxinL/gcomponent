@@ -4,9 +4,9 @@
 package mysql
 
 import (
-	"github.com/GuoxinL/gcomponent/components/environment"
-	"github.com/GuoxinL/gcomponent/components/logging"
-	"github.com/GuoxinL/gcomponent/components/tools"
+	"github.com/GuoxinL/gcomponent/environment"
+	"github.com/GuoxinL/gcomponent/logging"
+	"github.com/GuoxinL/gcomponent/tools"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"time"
@@ -23,7 +23,7 @@ type Configuration struct {
 }
 
 func (this *Configuration) Initialize(params ...interface{}) interface{} {
-	err := environment.GetConfig("components.mysql", &this)
+	err := environment.GetProperty("components.mysql", &this)
 	if err != nil {
 		logging.Exitf("GComponent [Mysql]读取配置异常, 退出程序！！！\n异常信息: %v", err.Error())
 	}

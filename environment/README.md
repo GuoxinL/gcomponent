@@ -3,7 +3,7 @@
 1. 代码
 ```go
 import (
-    _ "github.com/GuoxinL/gcomponent/components/environment"
+    _ "github.com/GuoxinL/gcomponent/environment"
 )
 ```
 2. 多环境配置文件夹  
