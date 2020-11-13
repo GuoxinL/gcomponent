@@ -5,6 +5,7 @@ package web_fasthttp
 
 import (
 	"fmt"
+	"github.com/GuoxinL/gcomponent/core"
 	"github.com/GuoxinL/gcomponent/environment"
 	"github.com/GuoxinL/gcomponent/logging"
 	"github.com/GuoxinL/gcomponent/tools"
@@ -43,7 +44,7 @@ func (this *Configuration) Initialize(params ...interface{}) interface{} {
 		logging.Info("GComponent [web-fasthttp]Method %v\tPath %v", method, strings.Replace(strings.Trim(fmt.Sprint(paths), "[]"), " ", ",", -1))
 	}
 	logging.Info("GComponent [web-fasthttp]Server init success port: %v", this.Port)
-	err = run(":"+this.Port, RequestPanicFilter(RequestInfoFilter(this.router.Handler)))
+	err = run(core.C+this.Port, RequestPanicFilter(RequestInfoFilter(this.router.Handler)))
 	if err != nil {
 		logging.Exitf("GComponent [web-fasthttp]启动失败: %v 退出程序！！！", err.Error())
 	}

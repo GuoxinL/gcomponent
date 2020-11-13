@@ -1,6 +1,6 @@
 foo:
   boo: aa
-  coo: 123
+  #  coo: 123
   doo:
     - abc
     - 123

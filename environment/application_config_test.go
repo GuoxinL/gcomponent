@@ -4,27 +4,27 @@
 package environment
 
 import (
-	"github.com/GuoxinL/gcomponent/core"
+	"fmt"
 	"github.com/GuoxinL/gcomponent/tools"
-	"os"
 	"testing"
 )
 
+// Environment variables FOO_COO=321
 func TestInit(t *testing.T) {
-	application := newApplicationConfig("", "")
-	getwd, err := os.Getwd()
-	if err != nil {
-		t.Error("Getwd error")
-	}
-	application.init(getwd + core.B + core.ApplicationFile)
+	application := newApplicationFile("", "")
+
 	ins := struct {
 		Foo struct {
-			Boo string   `yaml:"boo"`
-			Coo int      `yaml:"coo"`
-			Doo []string `yaml:"doo"`
-		} `yaml:"foo"`
+			Boo string   ` mapstructure:"boo" default:""`
+			Coo int      ` mapstructure:"coo" default:""`
+			Doo []string `mapstructure:"doo"`
+		} `mapstructure:"foo"`
 	}{}
-	err = application.Unmarshal(&ins)
+	application.SetDefault("foo.coo", 456)
+	application.AutomaticEnv()
+	err := application.Unmarshal(&ins)
+	coo := application.GetString("foo.coo")
+	fmt.Println(coo)
 	if err != nil {
 		t.Error("UnmarshalKey error")
 	}
@@ -34,3 +34,31 @@ func TestInit(t *testing.T) {
 	}
 	t.Log("yaml print: ", json)
 }
+
+//func ParseStruct(t reflect.Type, tag string) {
+//    if t.Kind() == reflect.Ptr {
+//        t = t.Elem()
+//    }
+//    if t.Kind() != reflect.Struct {
+//        return
+//    }
+//
+//    for i := 0; i < t.NumField(); i++ {
+//        f := t.Field(i)
+//        value := f.Tag.Get(tag)
+//        ft := t.Type
+//        if ft.Kind() == reflect.Ptr {
+//            ft = ft.Elem()
+//        }
+//
+//        // It seems that you don't want a tag from an struct field; only other fields' tags are needed
+//        if ft.Kind() != reflect.Struct {
+//            if len(value) != 0 {
+//                fmt.Println(value)
+//            }
+//            continue
+//        }
+//
+//        ParseStruct(ft, tag)
+//    }
+//}

@@ -23,9 +23,9 @@ const (
 var warningInstances *Configuration
 
 type Configuration struct {
-	Url          string `yaml:"url"`
-	Enable       bool   `yaml:"enable"`
-	LocalAddress string `yaml:"localAddress"`
+	Url          string `mapstructure:"url"`
+	Enable       bool   `mapstructure:"enable"`
+	LocalAddress string `mapstructure:"localAddress"`
 }
 
 func (this *Configuration) Initialize(params ...interface{}) interface{} {

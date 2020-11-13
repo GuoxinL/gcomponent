@@ -1,7 +1,7 @@
 /*
    Created by guoxin in 2020/4/13 1:34 下午
 */
-package cache
+package cache_redis
 
 import (
 	"github.com/GuoxinL/gcomponent/environment"
@@ -16,45 +16,41 @@ func init() {
 	new(Configuration).Initialize()
 }
 
-var redisInstances *dbInstanceMap
+var instances *dbInstanceMap
 
 type Configuration struct {
-	RedisSources []RedisSource `yaml:"rds"`
+	RedisSources []RedisSource `mapstructure:"rds"`
 }
 
 type Pool struct {
-	MaxActive       int `yaml:"maxActive"`
-	MaxIdle         int `yaml:"maxIdle"`
-	IdleTimeout     int `yaml:"idleTimeout"`
-	MaxConnLifetime int `yaml:"maxConnLifetime"`
-	TestOnBorrow    int `yaml:"testOnBorrow"`
+	MaxActive       int `mapstructure:"maxActive"`
+	MaxIdle         int `mapstructure:"maxIdle"`
+	IdleTimeout     int `mapstructure:"idleTimeout"`
+	MaxConnLifetime int `mapstructure:"maxConnLifetime"`
+	TestOnBorrow    int `mapstructure:"testOnBorrow"`
 }
 
 type Option struct {
-	ConnectTimeout int `yaml:"connectTimeout"`
-	WriteTimeout   int `yaml:"writeTimeout"`
-	ReadTimeout    int `yaml:"readTimeout"`
+	ConnectTimeout int `mapstructure:"connectTimeout"`
+	WriteTimeout   int `mapstructure:"writeTimeout"`
+	ReadTimeout    int `mapstructure:"readTimeout"`
 }
 
 type RedisSource struct {
-	Name     string   `yaml:"name"`
-	Nodes    []string `yaml:"nodes"`
-	Password string   `yaml:"password"`
-	Pool     Pool     `yaml:"pool"`
-	Option   Option   `yaml:"option"`
+	Name     string   `mapstructure:"name"`
+	Nodes    []string `mapstructure:"nodes"`
+	Password string   `mapstructure:"password"`
+	Pool     Pool     `mapstructure:"pool"`
+	Option   Option   `mapstructure:"option"`
 }
 
-type clusterWrapper struct {
-	cluster redisc.Cluster
-}
-
-func (this *Configuration) Initialize(params ...interface{}) interface{} {
-	err := environment.GetProperty("components.redis", &this)
+func (c *Configuration) Initialize(params ...interface{}) interface{} {
+	err := environment.GetProperty("components.redis", &c)
 	if err != nil {
-		logging.Exitf("GComponent [Mysql]读取配置异常, 退出程序！！！\n异常信息: %v", err.Error())
+		logging.Exitf("GComponent [Redis]读取配置异常, 退出程序！！！\n异常信息: %v", err.Error())
 	}
-	redisInstances = newRedisInstanceMap()
-	for _, source := range this.RedisSources {
+	instances = newRedisInstanceMap()
+	for _, source := range c.RedisSources {
 		cluster := redisc.Cluster{
 			StartupNodes: source.Nodes,
 			DialOptions: []redis.DialOption{
@@ -92,18 +88,9 @@ func (this *Configuration) Initialize(params ...interface{}) interface{} {
 			},
 		}
 
-		redisInstances.Put(source.Name, &clusterWrapper{cluster})
+		instances.Put(source.Name, &clusterWrapper{cluster})
 	}
-	GetInstance("xxx")
 	return nil
-}
-
-func (this *clusterWrapper) Get(key string) (string, error) {
-	return redis.String(this.cluster.Get().Do("GET", key))
-}
-
-func (this *clusterWrapper) Set(key string, value interface{}) (string, error) {
-	return redis.String(this.cluster.Get().Do("SET", key, value))
 }
 
 func getDurationSecond(i int) time.Duration {
@@ -114,7 +101,7 @@ func getDurationSecond(i int) time.Duration {
 通过该方法获得*redisc.Cluster对象
 */
 func GetInstance(name string) *redisc.Cluster {
-	instance := redisInstances.Get(name)
+	instance := instances.Get(name)
 	if instance == nil {
 		logging.Error0("未找到`" + name + "`对应的数据库连接，请核对配置文件")
 		return nil

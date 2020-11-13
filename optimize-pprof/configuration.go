@@ -16,8 +16,8 @@ func init() {
 }
 
 type Configuration struct {
-	Port   string `yaml:"port"`
-	Enable bool   `yaml:"enable"`
+	Port   string `mapstructure:"port"`
+	Enable bool   `mapstructure:"enable"`
 }
 
 func (this *Configuration) Initialize(params ...interface{}) interface{} {

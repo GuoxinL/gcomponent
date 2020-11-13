@@ -30,7 +30,7 @@ func (c Configuration) Initialize(params ...interface{}) interface{} {
 	if err != nil {
 		panic("组件[Logging]读取配置异常" + err.Error())
 	}
-	filePath := environment.GetApplication().Directory() + c.Filename
+	filePath := environment.GetApplicationFile().Directory() + c.Filename
 	logPath := getLogPath(filePath)
 	startsWith := strings.HasPrefix(logPath, core.B)
 	var fullLogPath string

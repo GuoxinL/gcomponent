@@ -11,7 +11,7 @@ import (
 )
 
 /**
-Post 请求
+post 请求
 url: 请求路径
 request: 请求对象会被放到request body中
 response: 响应对象会从响应body中通过json反序列化到response中

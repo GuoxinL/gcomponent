@@ -4,6 +4,7 @@
 package mysql
 
 import (
+	"github.com/GuoxinL/gcomponent/core"
 	"github.com/GuoxinL/gcomponent/environment"
 	"github.com/GuoxinL/gcomponent/logging"
 	"github.com/GuoxinL/gcomponent/tools"
@@ -29,7 +30,7 @@ func (this *Configuration) Initialize(params ...interface{}) interface{} {
 	}
 	instanceMap := newDbInstanceMap()
 	for _, dataSource := range this.DataSources {
-		url := dataSource.Username + ":" + dataSource.Password + "@(" + dataSource.Url + ")/" + dataSource.Database + "?" + "charset=utf8&parseTime=True&loc=Local"
+		url := dataSource.Username + core.C + dataSource.Password + "@(" + dataSource.Url + ")/" + dataSource.Database + "?" + "charset=utf8&parseTime=True&loc=Local"
 		db, err := gorm.Open("mysql", url)
 
 		if err != nil {

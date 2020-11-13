@@ -439,13 +439,13 @@ func BenchmarkFormatLogRecord(b *testing.B) {
 
 func BenchmarkConsoleLog(b *testing.B) {
 	/* This doesn't seem to work on OS X
-	sink, err := os.Open(os.DevNull)
-	if err != nil {
-		panic(err)
-	}
-	if err := syscall.Dup2(int(sink.Fd()), syscall.Stdout); err != nil {
-		panic(err)
-	}
+	   sink, err := os.Open(os.DevNull)
+	   if err != nil {
+	   	panic(err)
+	   }
+	   if err := syscall.Dup2(int(sink.Fd()), syscall.Stdout); err != nil {
+	   	panic(err)
+	   }
 	*/
 
 	stdout = ioutil.Discard

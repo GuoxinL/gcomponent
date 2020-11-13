@@ -41,7 +41,7 @@ func (this *Configuration) Initialize(params ...interface{}) interface{} {
 	//	logging.Info("GComponent [web-fasthttp]Method %v\tPath %v", method, strings.Replace(strings.Trim(fmt.Sprint(paths), "[]"), " ", ",", -1))
 	//}
 	logging.Info("GComponent [web-gin]Server init success port: %v", this.Port)
-	//err = run(":"+this.Port, RequestPanicFilter(RequestInfoFilter(this.router.Handler)))
+	//err = run(core.C+this.Port, RequestPanicFilter(RequestInfoFilter(this.router.Handler)))
 	if err != nil {
 		logging.Exitf("GComponent [web-gin]启动失败: %v 退出程序！！！", err.Error())
 	}
