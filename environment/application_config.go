@@ -12,7 +12,7 @@ import (
 )
 
 type ApplicationFile struct {
-	viper.Viper
+	*viper.Viper
 	absolutePath  string
 	directory     string
 	directoryName string
@@ -29,7 +29,8 @@ func newApplicationFile(profile string, directoryName string) *ApplicationFile {
 		fmt.Println(err)
 	}
 
-	a := &ApplicationFile{Viper: *viper.New()}
+	a := &ApplicationFile{Viper: viper.New()}
+
 	a.directoryName = directoryName
 	if len(profile) == 0 {
 		a.absolutePath = pwd + core.B + a.directoryName + core.B

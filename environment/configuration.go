@@ -20,9 +20,9 @@ const (
 )
 
 // TODO 这里如果初始化会因为调用了 envflag.Parse 出现和 testing.Init 争抢初始化，会报异常进而影响到项目编写测试
-func init() {
-	//new(Configuration).Initialize()
-}
+//func init() {
+//	new(Configuration).Initialize()
+//}
 
 var instance Configuration
 
@@ -48,7 +48,7 @@ func (c *Configuration) Initialize(params ...interface{}) interface{} {
 	// Application init
 	c.configurationFile = newApplicationFile(profile, directoryName)
 	application := Application{}
-	if err := c.configurationFile.UnmarshalKey("application", &application); err != nil {
+	if err := c.configurationFile.UnmarshalKey("components.application", &application); err != nil {
 		fmt.Println("Parse environment.Application exception")
 		application.Name = "wuming"
 	}

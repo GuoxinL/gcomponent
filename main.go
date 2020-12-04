@@ -4,9 +4,14 @@
 package main
 
 import (
-	_ "github.com/GuoxinL/gcomponent/environment"
-	_ "github.com/GuoxinL/gcomponent/logging"
+	cache_redis "github.com/GuoxinL/gcomponent/cache-redis"
+	"github.com/GuoxinL/gcomponent/environment"
+	"github.com/GuoxinL/gcomponent/logging"
 )
 
 func main() {
+	new(environment.Configuration).Initialize()
+	new(logging.Configuration).Initialize()
+	new(cache_redis.Configuration).Initialize()
+
 }

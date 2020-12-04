@@ -1,4 +1,7 @@
 components:
+  application:
+    Name: xxx
+    profile: dev
   logging:
     filename: logging.xml
   web:
@@ -23,23 +26,29 @@ components:
         idleTimeout: 60
   redis:
     rds:
-      - name: test
-        nodes:
+      - Name: test
+        Addrs:
           - 127.0.0.1:6379
           - 127.0.0.1:6380
           - 127.0.0.1:6381
           - 127.0.0.1:6382
           - 127.0.0.1:6383
           - 127.0.0.1:6384
-        password: test
-        pool:
-          maxIdle: 10
-          idleTimeout: 240
-          maxConnLifetime: 300
-        connection:
-          readTimeout: 50
-          writeTimeout: 50
-          connectTimeout: 50
+        Password: test
+        MaxRedirects: 0
+        ReadOnly: false
+        RouteByLatency: false
+
+        # timeout
+        DialTimeout: 10
+        ReadTimeout: 10
+        WriteTimeout: 10
+
+        #
+        PoolSize: 15 # 连接池容量
+        PoolTimeout: 5 # 连接池超时
+        IdleTimeout: 5
+        IdleCheckFrequency: 60 # 闲置检查
   wechat-warning:
     url: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=XXX
     enable: true

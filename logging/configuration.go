@@ -17,9 +17,9 @@ import (
 	"strings"
 )
 
-func init() {
-	new(Configuration).Initialize()
-}
+//func init() {
+//	new(Configuration).Initialize()
+//}
 
 type Configuration struct {
 	Filename string

@@ -1,0 +1,59 @@
+components:
+  application:
+    Name: xxx
+    Profile: dev
+  redis:
+    rds:
+      - Name: root
+        Cluster:
+          Addrs:
+            - 127.0.0.1:6379
+            - 127.0.0.1:6380
+            - 127.0.0.1:6381
+            - 127.0.0.1:6382
+            - 127.0.0.1:6383
+            - 127.0.0.1:6384
+          Password: test
+          MaxRedirects: 0
+          ReadOnly: false
+          RouteByLatency: false
+
+          # timeout
+          DialTimeout: 10
+          ReadTimeout: 10
+          WriteTimeout: 10
+
+          PoolSize: 15 # 连接池容量
+          PoolTimeout: 5 # 连接池超时
+          IdleTimeout: 5
+          IdleCheckFrequency: 60 # 闲置检查
+  logging:
+    filename: logging.xml
+  web:
+    port: 8080
+  mysql:
+    dbs:
+      - name: test
+        password: mysql
+        username: mysql
+        database: test
+        url: 127.0.0.1:3306
+        MaxIdleConns: 100
+        MaxOpenConns: 10
+        ConnMaxLifetime: 60
+      - name: test1
+        password: mysql
+        username: mysql
+        database: test1
+        url: 127.0.0.1:3306
+        active: 100
+        idle: 10
+        idleTimeout: 60
+
+  wechat-warning:
+    url: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=XXX
+    enable: true
+  optimize:
+    pprof:
+      port: 19190
+      enable: true
