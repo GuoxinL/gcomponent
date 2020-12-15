@@ -1,10 +1,9 @@
 /*
    Created by guoxin in 2020/4/13 1:34 下午
 */
-package log_zap
+package zap
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/GuoxinL/gcomponent/core"
 	"github.com/GuoxinL/gcomponent/environment"
@@ -14,13 +13,12 @@ import (
 	"os"
 )
 
-func init() {
-	new(Configuration).Initialize()
-}
+var instance *zap.Logger
 
 type Console struct {
-	core.Enable
-	Level string `mapstructure:"level"`
+	core.BEnable
+	Level   string        `mapstructure:"level"`
+	Encoder EncoderConfig `mapstructure:"encoder"`
 }
 
 type Logger struct {
@@ -78,90 +76,115 @@ type EncoderConfig struct {
 }
 
 type File struct {
-	core.Enable
-	Level string `mapstructure:"level"`
-}
-type Files struct {
-	core.Enable
-	Files []File `mapstructure:"console"`
-}
-type Configuration struct {
-	Console Console `mapstructure:"console"`
-	Files   []File  `mapstructure:"console"`
+	core.BEnable
+	Encoder EncoderConfig
+	Logger  Logger
+	Level   string `mapstructure:"level"`
 }
 
-func (this *Configuration) Initialize(params ...interface{}) interface{} {
-	err := environment.GetProperty("components.log.zap", &this)
+type Files struct {
+	core.BEnable
+	Files []File `mapstructure:"console"`
+}
+
+type Configuration struct {
+	Console       Console `mapstructure:"console"`
+	Files         []File  `mapstructure:"files"`
+	AddCallerSkip int     `mapstructure:"add_caller_skip"`
+}
+
+func (c *Configuration) Initialize(params ...interface{}) interface{} {
+	new(environment.Configuration).Initialize()
+	err := environment.GetProperty("components.log.zap", &c)
 	if err != nil {
 		panic(fmt.Sprintf("GComponent [ZAP]read config exception Exit！！！\nException message: %v", err.Error()))
 	}
-	name := "appName"
-	cores := []zapcore.Core{
-		consoleCore(),
-		jsonCore(),
+	var cores []zapcore.Core
+	if c.Console.Enable {
+		cores = append(cores, consoleWriter(DefaultEncoderConfig, DefaultLevel))
 	}
+	if len(c.Files) > 0 {
+		for _, file := range c.Files {
+			if file.Enable {
+
+			}
+		}
+	}
+	if c.AddCallerSkip > 0 {
+		zap.AddCallerSkip(c.AddCallerSkip)
+	}
+	zap.NewProductionEncoderConfig()
+
+	name := environment.GetName()
+	//cores := []zapcore.Core{
+	//	consoleWriter(),
+	//	jsonWriter(name),
+	//}
 	// 开启开发模式，堆栈跟踪
 	caller := zap.AddCaller()
 	// 开启文件及行号
 	development := zap.Development()
 	// 设置初始化字段
-	field := zap.Fields(zap.String("appName", name))
+	field := zap.Fields(zap.String("app", name))
 
-	// 构造日志
-	logger := zap.New(zapcore.NewTee(cores...)).WithOptions(caller, development, field)
+	instance = zap.New(zapcore.NewTee(cores...)).WithOptions(caller, development, field)
 	zap.L().Info("zap.L().Info", zap.Int("balabala", 1))
-	zap.ReplaceGlobals(logger)
+	zap.ReplaceGlobals(instance)
 
-	logger.Info("logger.Info 初始化成功")
+	instance.Info("logger.Info 初始化成功")
 	zap.S().Infof("zap.S().Infof %v", "fdsa")
 	return nil
 }
 
-func consoleCore() zapcore.Core {
+// Default logger encoder
+func DefaultEncoderConfig() zapcore.EncoderConfig {
+	return zapcore.EncoderConfig{
+		// Keys can be anything except the empty string.
+		MessageKey:     "msg",
+		LevelKey:       "level",
+		TimeKey:        "time",
+		NameKey:        "logger",
+		CallerKey:      "file",
+		StacktraceKey:  "stacktrace",
+		LineEnding:     zapcore.DefaultLineEnding,
+		EncodeLevel:    zapcore.CapitalLevelEncoder,
+		EncodeTime:     ISOTimeEncoder,
+		EncodeDuration: zapcore.StringDurationEncoder,
+		EncodeCaller:   zapcore.ShortCallerEncoder,
+	}
+}
+
+// Default logger config
+func DefaultLoggerFile(name string) *lumberjack.Logger {
+	return &lumberjack.Logger{
+		Filename:   name + ".log", // 日志文件路径
+		MaxSize:    128,           // 每个日志文件保存的大小 单位:M
+		MaxAge:     7,             // 文件最多保存多少天
+		MaxBackups: 30,            // 日志文件最多保存多少个备份
+		Compress:   false,         // 是否压缩
+	}
+}
+
+// Default logger level
+func DefaultLevel(lvl zapcore.Level) bool {
+	return lvl >= zapcore.DebugLevel
+}
+
+func jsonWriter(name string) zapcore.Core {
 	return zapcore.NewCore(
-		zapcore.NewConsoleEncoder(zap.NewDevelopmentEncoderConfig()),
-		zapcore.Lock(os.Stdout),
-		zap.LevelEnablerFunc(func(lvl zapcore.Level) bool {
-			return lvl >= zapcore.DebugLevel
-		}),
+		zapcore.NewJSONEncoder(DefaultEncoderConfig()),
+		// 输出多个文件
+		zapcore.NewMultiWriteSyncer([]zapcore.WriteSyncer{zapcore.AddSync(DefaultLoggerFile(name))}...),
+		// 输出单个文件
+		//zapcore.AddSync(DefaultLoggerFile(name)),
+		zap.LevelEnablerFunc(DefaultLevel),
 	)
 }
 
-func jsonCore() zapcore.Core {
-	logPath := "xxx.log"
-	hook := lumberjack.Logger{
-		Filename:   logPath, // 日志文件路径
-		MaxSize:    128,     // 每个日志文件保存的大小 单位:M
-		MaxAge:     7,       // 文件最多保存多少天
-		MaxBackups: 30,      // 日志文件最多保存多少个备份
-		Compress:   false,   // 是否压缩
-	}
-	var writes = []zapcore.WriteSyncer{zapcore.AddSync(&hook)}
-	encoderConfig := zapcore.EncoderConfig{
-		MessageKey:    "msg",
-		LevelKey:      "level",
-		TimeKey:       "time",
-		NameKey:       "logger",
-		CallerKey:     "file",
-		StacktraceKey: "stacktrace",
-		// 一行结束标识符
-		LineEnding: zapcore.DefaultLineEnding,
-		// A LevelEncoder serializes a Level to a primitive type.
-		EncodeLevel: zapcore.CapitalColorLevelEncoder,
-		// 日期格式
-		EncodeTime: zapcore.ISO8601TimeEncoder,
-
-		EncodeDuration: zapcore.SecondsDurationEncoder,
-		EncodeCaller:   zapcore.ShortCallerEncoder, // 短路径编码器
-		EncodeName:     zapcore.FullNameEncoder,
-	}
-	marshal, _ := json.Marshal(encoderConfig)
-	fmt.Println(string(marshal))
+func consoleWriter(encoder func() zapcore.EncoderConfig, lvl func(lvl zapcore.Level) bool) zapcore.Core {
 	return zapcore.NewCore(
-		zapcore.NewJSONEncoder(encoderConfig),
-		zapcore.NewMultiWriteSyncer(writes...),
-		zap.LevelEnablerFunc(func(lvl zapcore.Level) bool {
-			return lvl >= zapcore.DebugLevel
-		}),
+		zapcore.NewConsoleEncoder(encoder()),
+		zapcore.Lock(os.Stdout),
+		zap.LevelEnablerFunc(DefaultLevel),
 	)
 }

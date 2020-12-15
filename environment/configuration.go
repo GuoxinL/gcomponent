@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"github.com/GuoxinL/gcomponent/core"
 	"github.com/gobike/envflag"
+	"go.uber.org/atomic"
 )
 
 const (
@@ -26,6 +27,8 @@ const (
 
 var instance Configuration
 
+var lock = atomic.NewBool(false)
+
 // The properties that Application has, If the future properties out more application-specific properties put in here
 type Application struct {
 	Name    string `mapstructure:"name"`
@@ -40,6 +43,10 @@ type Configuration struct {
 }
 
 func (c *Configuration) Initialize(params ...interface{}) interface{} {
+	if lock.Load() {
+		return &instance
+	}
+	lock.Store(true)
 	// Environment variables
 	profile := *flag.String("profile", "", "Allowing us to map our beans to different profiles")
 	directoryName := *flag.String("dir", ConfigDirectory, "The directory where the configuration files are located")
@@ -55,7 +62,7 @@ func (c *Configuration) Initialize(params ...interface{}) interface{} {
 	c.application = application
 
 	instance = *c
-	return nil
+	return &instance
 }
 
 func IsProfile(profile string) bool {

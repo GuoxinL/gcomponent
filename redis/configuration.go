@@ -1,7 +1,7 @@
 /*
    Created by guoxin in 2020/4/13 1:34 下午
 */
-package cache_redis
+package redis
 
 import (
 	"github.com/GuoxinL/gcomponent/environment"
@@ -28,6 +28,7 @@ type RedisSource struct {
 }
 
 func (c *Configuration) Initialize(params ...interface{}) interface{} {
+	new(environment.Configuration).Initialize()
 	err := environment.GetProperty("components.redis", &c)
 	if err != nil {
 		logging.Exitf("GComponent [Redis]Read configuration exceptions and exit.\nerror: %v", err.Error())
@@ -70,13 +71,13 @@ func (c *Configuration) Initialize(params ...interface{}) interface{} {
 /**
 通过该方法获得 *redis.Cmdable 对象
 */
-func GetInstance(name string) *redis.Cmdable {
+func GetInstance(name string) redis.Cmdable {
 	instance := instances.Get(name)
 	if instance == nil {
 		logging.Error0("The database connection for `" + name + "` was not found, please check the configuration file")
 		return nil
 	}
-	return instance.(*redis.Cmdable)
+	return instance.(redis.Cmdable)
 }
 
 type instanceMap struct {

@@ -1,7 +1,7 @@
 /*
    Created by guoxin in 2020/10/31 10:01 下午
 */
-package web_gin
+package gin
 
 import (
 	"errors"

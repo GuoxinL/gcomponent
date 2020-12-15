@@ -8,6 +8,12 @@
 */
 package core
 
+import (
+	"os"
+	"path"
+	"runtime"
+)
+
 type Initialize interface {
 	/*
 		初始化配置
@@ -28,25 +34,24 @@ type Properties interface {
 	load()
 }
 
-type Enable struct {
+type BEnable struct {
 	Enable bool `mapstructure:"enable"`
 }
 
 const (
-	/*
-		分隔符(separator)
-	*/
+	// separator
 	S string = "."
-	/*
-		斜杠(Backslash)
-	*/
+	// Backslash
 	B string = "/"
-	/*
-		冒号(colon)
-	*/
+	// colon
 	C string = ":"
-	/*
-		艾特
-	*/
+	// at
 	AT string = "@"
 )
+
+// set work directory
+func SetWorkDirectory() error {
+	_, filename, _, _ := runtime.Caller(0)
+	dir := path.Join(path.Dir(filename), "..")
+	return os.Chdir(dir)
+}

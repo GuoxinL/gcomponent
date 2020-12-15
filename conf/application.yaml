@@ -1,6 +1,6 @@
 components:
   application:
-    Name: xxx
+    Name: application_name
     Profile: dev
   redis:
     rds:

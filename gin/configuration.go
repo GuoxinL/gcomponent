@@ -1,7 +1,7 @@
 /*
    Created by guoxin in 2020/10/25 5:58 下午
 */
-package web_gin
+package gin
 
 import (
 	"github.com/GuoxinL/gcomponent/environment"
@@ -28,7 +28,8 @@ func (this *Configuration) Initialize(params ...interface{}) interface{} {
 	if err != nil {
 		logging.Exitf("GComponent [web-gin]读取配置异常, 退出程序！！！\n异常信息: %v", err.Error())
 	}
-	this.router = gin.Default()
+	this.router = gin.New()
+	this.router.Use(gin.Recovery())
 	if webConfigurationInterface := params[0]; webConfigurationInterface != nil {
 		webConfiguration, ok := webConfigurationInterface.(ControllerConfiguration)
 		if !ok {

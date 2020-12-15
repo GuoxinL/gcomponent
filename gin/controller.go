@@ -1,7 +1,7 @@
 /*
    Created by guoxin in 2020/11/1 4:08 下午
 */
-package web_gin
+package gin
 
 import (
 	"github.com/gin-gonic/gin"
