@@ -13,8 +13,8 @@ import (
 // test Configuration.Initialize  It's only initialized once
 func TestConfiguration_Initialize(t *testing.T) {
     _ = core.SetWorkDirectory()
-    initialize0 := new(Configuration).Initialize()
-    initialize1 := new(Configuration).Initialize()
+    initialize0 := New()
+    initialize1 := New()
     if initialize0 != initialize1 {
         t.Error("The two instances have different addresses")
     }

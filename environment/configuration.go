@@ -18,12 +18,13 @@ const (
     DefaultProfile        = "dev"
     DefaultConfigFileName = APPLICATION + core.S + YAML
 )
+var initializeLock = core.NewInitLock()
 
-func New() {
+func New() interface{} {
     c := &Configuration{
-        InitializeLock: core.NewInitLock(),
+        InitializeLock: initializeLock,
     }
-    c.Initialize()
+    return c.Initialize()
 }
 
 var instance Configuration
