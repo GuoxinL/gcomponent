@@ -27,8 +27,10 @@ components:
           PoolTimeout: 5 # 连接池超时
           IdleTimeout: 5
           IdleCheckFrequency: 60 # 闲置检查
-  logging:
-    filename: logging.xml
+  log:
+    zap:
+      console:
+      files:
   web:
     port: 8080
   mysql:

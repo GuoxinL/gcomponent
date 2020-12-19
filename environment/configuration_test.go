@@ -1,4 +1,6 @@
 /**
+  Environment test
+
   Create by guoxin 2020.12.14
 */
 package environment
@@ -26,6 +28,7 @@ func TestGetName(t *testing.T) {
     }
 }
 
+// Test for repeated loading
 func TestGetProfile(t *testing.T) {
     _ = core.SetWorkDirectory()
     new(Configuration).Initialize()

@@ -1,38 +1,39 @@
 /*
+   Environment test
    Created by guoxin in 2020/11/10 8:34 上午
 */
 package environment
 
 import (
-	"fmt"
-	"github.com/GuoxinL/gcomponent/tools"
-	"testing"
+    "encoding/json"
+    "fmt"
+    "testing"
 )
 
 // Environment variables FOO_COO=321
 func TestInit(t *testing.T) {
-	application := newApplicationFile("", "")
+    application := newApplicationFile("", "")
 
-	ins := struct {
-		Foo struct {
-			Boo string   ` mapstructure:"boo" default:""`
-			Coo int      ` mapstructure:"coo" default:""`
-			Doo []string `mapstructure:"doo"`
-		} `mapstructure:"foo"`
-	}{}
-	application.SetDefault("foo.coo", 456)
-	application.AutomaticEnv()
-	err := application.Unmarshal(&ins)
-	coo := application.GetString("foo.coo")
-	fmt.Println(coo)
-	if err != nil {
-		t.Error("UnmarshalKey error")
-	}
-	json, err := tools.ToJson(ins)
-	if err != nil {
-		t.Error("ToJson error")
-	}
-	t.Log("yaml print: ", json)
+    ins := struct {
+        Foo struct {
+            Boo string   ` mapstructure:"boo" default:""`
+            Coo int      ` mapstructure:"coo" default:""`
+            Doo []string `mapstructure:"doo"`
+        } `mapstructure:"foo"`
+    }{}
+    application.SetDefault("foo.coo", 456)
+    application.AutomaticEnv()
+    err := application.Unmarshal(&ins)
+    coo := application.GetString("foo.coo")
+    fmt.Println(coo)
+    if err != nil {
+        t.Error("UnmarshalKey error")
+    }
+    j, err := json.Marshal(ins)
+    if err != nil {
+        t.Error("ToJson error")
+    }
+    t.Log("yaml print: ", string(j))
 }
 
 //func ParseStruct(t reflect.Type, tag string) {

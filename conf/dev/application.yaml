@@ -1,7 +1,7 @@
 components:
   application:
-    Name: xxx
-    profile: dev
+    Name: application_name
+    Profile: dev
   logging:
     filename: logging.xml
   web:
