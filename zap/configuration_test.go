@@ -1,7 +1,7 @@
 /**
   Create by guoxin 2020.12.15
 */
-package zap
+package gzap
 
 import (
     "github.com/GuoxinL/gcomponent/core"

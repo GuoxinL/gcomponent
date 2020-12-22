@@ -5,17 +5,14 @@
 package main
 
 import (
-	"github.com/GuoxinL/gcomponent/environment"
+    "github.com/GuoxinL/gcomponent/environment"
 )
 
 func main() {
     environment.New()
-    name := environment.GetName()
-    fmt.Println(name)
-    file := environment.GetApplicationFile()
-    fmt.Println(file)
-    profile := environment.GetProfile()
-    fmt.Println(profile)
+    fmt.Println(environment.GetName())
+    fmt.Println(environment.GetApplicationFile())
+    fmt.Println(environment.GetProfile())
 }
 ```
 ### 配置文件

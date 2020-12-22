@@ -27,10 +27,39 @@ components:
           PoolTimeout: 5 # 连接池超时
           IdleTimeout: 5
           IdleCheckFrequency: 60 # 闲置检查
-  log:
-    zap:
-      console:
-      files:
+  zap:
+    addCallerSkip: 0
+    console:
+      enable: true
+      level: debug
+      encoder:
+        messageKey: msg
+        levelKey: level
+        timeKey: time
+        nameKey: logger
+        callerKey: file
+        stacktraceKey: stacktrace
+        lineEnding: \n
+        timeFormat: 2006-01-02T15:04:05.000
+    files:
+      - enable: true
+        level: debug
+        encoder:
+          messageKey: msg
+          levelKey: level
+          timeKey: time
+          nameKey: logger
+          callerKey: file
+          stacktraceKey: stacktrace
+          lineEnding: \n
+          timeFormat: 2006-01-02T15:04:05.000
+        logger:
+          filename: gcomponent_zap.log
+          maxsize: 128
+          maxage: 7
+          maxbackups: 30
+          localtime:
+          compress: false
   web:
     port: 8080
   mysql:

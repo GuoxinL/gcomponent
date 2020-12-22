@@ -18,6 +18,7 @@ const (
     DefaultProfile        = "dev"
     DefaultConfigFileName = APPLICATION + core.S + YAML
 )
+
 var initializeLock = core.NewInitLock()
 
 func New() interface{} {
@@ -77,7 +78,10 @@ func GetProfile() string {
 
 // Get the configuration profile
 func GetName() string {
-    return instance.application.Name
+    if len(instance.application.Name) != 0 {
+        return instance.application.Name
+    }
+    return "gcomponent-service"
 }
 
 // Get the configuration in application.yaml under the current environment directory
