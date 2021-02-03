@@ -4,14 +4,12 @@
 package main
 
 import (
-	cache_redis "github.com/GuoxinL/gcomponent/cache-redis"
-	"github.com/GuoxinL/gcomponent/environment"
-	"github.com/GuoxinL/gcomponent/logging"
+    ggorm "github.com/GuoxinL/gcomponent/gorm"
+    gzap "github.com/GuoxinL/gcomponent/zap"
 )
 
 func main() {
-	new(environment.Configuration).Initialize()
-	new(logging.Configuration).Initialize()
-	new(cache_redis.Configuration).Initialize()
+    gzap.New()
+    ggorm.New()
 
 }

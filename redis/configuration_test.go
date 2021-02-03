@@ -1,7 +1,7 @@
 /**
   Create by guoxin 2020.12.14
 */
-package redis
+package gredis
 
 import (
     "fmt"
@@ -18,7 +18,7 @@ func TestGetInstance(t *testing.T) {
     instance.Get("xxx")
 }
 
-func TestXxx(t *testing.T)  {
+func TestXxx(t *testing.T) {
     var initLock bool
 
     fmt.Println(initLock)

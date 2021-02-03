@@ -2,6 +2,8 @@ components:
   application:
     Name: application_name
     Profile: dev
+  gin:
+    port: 8080
   redis:
     rds:
       - Name: root
@@ -62,24 +64,16 @@ components:
           compress: false
   web:
     port: 8080
-  mysql:
-    dbs:
+  gorm:
+    dataSources:
       - name: test
-        password: mysql
-        username: mysql
         database: test
-        url: 127.0.0.1:3306
+        username: root
+        password: root
+        url: localhost:3306
         MaxIdleConns: 100
         MaxOpenConns: 10
         ConnMaxLifetime: 60
-      - name: test1
-        password: mysql
-        username: mysql
-        database: test1
-        url: 127.0.0.1:3306
-        active: 100
-        idle: 10
-        idleTimeout: 60
 
   wechat-warning:
     url: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=XXX

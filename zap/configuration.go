@@ -140,7 +140,7 @@ func (c *Configuration) Initialize(params ...interface{}) interface{} {
     environment.New()
     err := environment.GetProperty("components.zap", &c)
     if err != nil {
-        panic(fmt.Sprintf("GComponent [zap]read config exception Exit！！！\nException message: %v", err.Error()))
+        panic(fmt.Sprintf("GComponent [zap] read config exception Exit！！！\nException message: %v", err.Error()))
     }
 
     var cores []zapcore.Core
@@ -176,8 +176,6 @@ func (c *Configuration) Initialize(params ...interface{}) interface{} {
         cores = append(cores, writerConsole(defaultEncoderConfig(), defaultLevel))
         cores = append(cores, writerJson(defaultEncoderConfig(), []zapcore.WriteSyncer{zapcore.AddSync(defaultLoggerFile("default"))}, defaultLevel))
     }
-
-
 
     // 开启文件及行号
     caller := zap.AddCaller()
@@ -276,7 +274,7 @@ func writerConsole(encoder zapcore.EncoderConfig, lvl func(lvl zapcore.Level) bo
     return zapcore.NewCore(
         zapcore.NewConsoleEncoder(encoder),
         zapcore.Lock(os.Stdout),
-        zap.LevelEnablerFunc(defaultLevel),
+        zap.LevelEnablerFunc(lvl),
     )
 }
 
