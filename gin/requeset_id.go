@@ -1,6 +1,5 @@
-/**
-  Create by guoxin 2020.12.16
-*/
+// Package ggin
+// Created by guoxin in 2020/10/31 10:01 下午
 package ggin
 
 import (

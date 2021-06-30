@@ -1,6 +1,5 @@
-/**
-  Create by guoxin 2020.12.15
-*/
+// Package gzap
+// Create by guoxin 2020.12.15
 package gzap
 
 import (

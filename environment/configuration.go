@@ -1,6 +1,5 @@
-/*
-   Created by guoxin in 2020/4/10 11:18 上午
-*/
+// Package environment
+// Created by guoxin in 2020/4/10 11:18 上午
 package environment
 
 import (
@@ -71,12 +70,12 @@ func IsProfile(profile string) bool {
     return instance.application.Profile == profile
 }
 
-// Get the configuration profile
+// GetProfile Get the configuration profile
 func GetProfile() string {
     return instance.application.Profile
 }
 
-// Get the configuration profile
+// GetName Get the configuration profile
 func GetName() string {
     if len(instance.application.Name) != 0 {
         return instance.application.Name
@@ -84,7 +83,7 @@ func GetName() string {
     return "gcomponent-service"
 }
 
-// Get the configuration in application.yaml under the current environment directory
+// GetProperty Get the configuration in application.yaml under the current environment directory
 func GetProperty(prefix string, config interface{}) error {
     if len(prefix) == 0 {
         err := instance.configurationFile.Unmarshal(&config)
@@ -100,7 +99,7 @@ func GetProperty(prefix string, config interface{}) error {
     return nil
 }
 
-// Get the configuration directory application.yaml viper.Viper
+// GetApplicationFile Get the configuration directory application.yaml viper.Viper
 func GetApplicationFile() *ApplicationFile {
     return instance.configurationFile
 }

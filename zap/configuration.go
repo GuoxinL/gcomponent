@@ -1,6 +1,5 @@
-/*
-   Created by guoxin in 2020/4/13 1:34 下午
-*/
+// Package gzap
+// Created by guoxin in 2020/4/13 1:34 下午
 package gzap
 
 import (
@@ -19,7 +18,7 @@ var (
     instance       *zap.Logger
 )
 
-// Make sure you only initialize it once
+// New Make sure you only initialize it once
 func New(params ...interface{}) {
     c := &Configuration{
         InitializeLock: initializeLock,
@@ -34,7 +33,7 @@ type Console struct {
     Encoder      EncoderConfig `mapstructure:"encoder"`
 }
 
-// See lumberjack.Logger
+// Logger See lumberjack.Logger
 type Logger struct {
     Filename   string `json:"filename" mapstructure:"filename"`
     MaxSize    int    `json:"maxsize" mapstructure:"maxsize"`

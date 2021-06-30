@@ -1,6 +1,5 @@
-/*
-   Created by guoxin in 2020/10/31 10:01 下午
-*/
+// Package ggin
+// Created by guoxin in 2020/10/31 10:01 下午
 package ggin
 
 import (
@@ -10,19 +9,16 @@ import (
     "reflect"
 )
 
-/**
-
-request
-	1. query
-	2. body
-	3. path
-	4. header
-
-response
-	1. code
-	2. body
-
-*/
+// ResultBuilder
+// request
+//	1. query
+//	2. body
+//	3. path
+//	4. header
+//
+// response
+//	1. code
+//	2. body
 type ResultBuilder interface {
 }
 type Parameter struct {
@@ -34,9 +30,11 @@ func Query(i interface{}) error {
     return nil
 }
 
+
 //func (p Parameter) Read(i interface{}) (err error) {
 //	t := reflect.TypeOf(i)
 //}
+
 var ParamsType = []string{ParamQuery, ParamBody, ParamPath, ParamHeader}
 
 const (

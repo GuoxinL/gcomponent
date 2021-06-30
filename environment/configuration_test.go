@@ -1,8 +1,5 @@
-/**
-  Environment test
-
-  Create by guoxin 2020.12.14
-*/
+// Package environment
+// Create by guoxin 2020.12.14
 package environment
 
 import (

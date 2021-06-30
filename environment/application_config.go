@@ -1,6 +1,5 @@
-/*
-   Created by guoxin in 2020/11/8 6:38 下午
-*/
+// Package environment
+// Created by guoxin in 2020/11/8 6:38 下午
 package environment
 
 import (
@@ -18,7 +17,7 @@ type ApplicationFile struct {
     directoryName string
 }
 
-// Get the current configuration directory
+// Directory Get the current configuration directory
 func (a *ApplicationFile) Directory() string {
     return a.absolutePath
 }

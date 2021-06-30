@@ -1,6 +1,5 @@
-/**
-  Create by guoxin 2020.12.15
-*/
+// Package ggin
+// Create by guoxin 2020.12.15
 package ggin
 
 import (
@@ -22,7 +21,7 @@ func HandlerNotFound(c *gin.Context) {
     return
 }
 
-// GinLogger 接收gin框架默认的日志
+// Logger GinLogger 接收gin框架默认的日志
 func Logger(logger *zap.Logger) gin.HandlerFunc {
     return func(c *gin.Context) {
         gin.Default()
@@ -115,7 +114,7 @@ func Ginzap(logger *zap.Logger, timeFormat string, utc bool, enableRequestId boo
     }
 }
 
-// GinRecovery recover掉项目可能出现的panic
+// Recovery GinRecovery recover掉项目可能出现的panic
 func Recovery(logger *zap.Logger, stack bool) gin.HandlerFunc {
     return func(c *gin.Context) {
         defer func() {

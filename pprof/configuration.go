@@ -1,6 +1,5 @@
-/*
-   Created by guoxin in 2020/6/5 4:35 下午
-*/
+// Package gpprof
+// Created by guoxin in 2020/6/5 4:35 下午
 package gpprof
 
 import (

@@ -1,6 +1,5 @@
-/*
-   Created by guoxin in 2020/10/25 5:58 下午
-*/
+// Package ggin
+// Created by guoxin in 2020/10/25 5:58 下午
 package ggin
 
 import (
@@ -32,9 +31,8 @@ type Configuration struct {
     router *gin.Engine
 }
 
-/**
-https://www.cnblogs.com/kainhuck/p/13333765.html
-*/
+// Initialize
+// https://www.cnblogs.com/kainhuck/p/13333765.html
 func (c *Configuration) Initialize(params ...interface{}) interface{} {
     if c.IsInit() {
         return &instance

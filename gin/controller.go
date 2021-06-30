@@ -1,6 +1,5 @@
-/*
-   Created by guoxin in 2020/11/1 4:08 下午
-*/
+// Package ggin
+// Created by guoxin in 2020/11/1 4:08 下午
 package ggin
 
 import (
@@ -8,11 +7,13 @@ import (
     "net/http"
 )
 
+// ControllerConfiguration
 // Register the Controller with the gin.RouterGroup route
 type ControllerConfiguration interface {
     Configure(Controllers)
 }
 
+// Controller
 // Implement Controller coding the interface
 type Controller func(p *Parameter) *Result
 
@@ -20,6 +21,7 @@ func test(p *Parameter) *Result {
     return nil
 }
 
+// Controllers
 // Here can use gin.Engine and gin.RouterGroup.
 // gin.RouterGroup.Group() No good ideas yet
 // Controllers are c *gin.Engine wrappers
@@ -70,9 +72,8 @@ func (c *Controllers) TRACE(path string, controller Controller) {
     c.Register(http.MethodTrace, path, controller)
 }
 
-/**
-Http result
-*/
+// Result
+// Http result
 type Result struct {
     // Http status code
     code int

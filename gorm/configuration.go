@@ -1,6 +1,5 @@
-/*
-   Created by guoxin in 2020/4/10 11:18 上午
-*/
+// Package ggorm
+// Created by guoxin in 2020/4/10 11:18 上午
 package ggorm
 
 import (
@@ -97,9 +96,8 @@ func DB(name string) *gorm.DB {
     return db.(*gorm.DB)
 }
 
-/**
-通过该方法获得*gorm.DB对象
-*/
+// GetInstance
+// 通过该方法获得*gorm.DB对象
 func GetInstance(name string) *gorm.DB {
     db := instances.Get(name)
     if db == nil {

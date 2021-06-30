@@ -1,6 +1,5 @@
-/**
-  Create by guoxin 2020.12.22
-*/
+// Package ggorm
+// Created by guoxin in 2020/4/10 11:18 上午
 package ggorm
 
 import (

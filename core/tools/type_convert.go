@@ -1,6 +1,5 @@
-/*
-   Created by guoxin in 2020/11/1 12:08 上午
-*/
+// Package tools
+// Created by guoxin in 2020/11/1 12:08 上午
 package tools
 
 import (

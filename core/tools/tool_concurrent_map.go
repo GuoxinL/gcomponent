@@ -1,6 +1,5 @@
-/*
-   Created by guoxin in 2020/1/10 11:16 上午
-*/
+// Package tools
+// Created by guoxin in 2020/1/10 11:16 上午
 package tools
 
 import "sync"
@@ -74,9 +73,8 @@ func (this *ConcurrentMap) GetMap() map[string]interface{} {
     return maps
 }
 
-/**
-从ConcurrentMap中获得线程不安全map
-*/
+// GetAndRemoveMap
+// 从ConcurrentMap中获得线程不安全map
 func (this *ConcurrentMap) GetAndRemoveMap() map[string]interface{} {
     this.l.Lock()
     defer this.l.Unlock()
@@ -109,10 +107,9 @@ func NewConcurrentMapData(source map[string]interface{}) *ConcurrentMap {
     }
 }
 
-/**
-key: interface
-value: interface
-*/
+// ConcurrentMap0
+// key: interface
+// value: interface
 type ConcurrentMap0 struct {
     d map[interface{}]interface{}
     l sync.Mutex

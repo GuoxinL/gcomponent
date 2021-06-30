@@ -1,7 +1,6 @@
-/*
-   Environment test
-   Created by guoxin in 2020/11/10 8:34 上午
-*/
+// Package environment
+// Environment test
+// Created by guoxin in 2020/11/8 6:38 下午
 package environment
 
 import (

@@ -1,6 +1,5 @@
-/*
-   Created by guoxin in 2020/1/10 2:15 下午
-*/
+// Package tools
+// Created by guoxin in 2020/1/10 2:15 下午
 package tools
 
 import (
@@ -71,9 +70,8 @@ func (t TryCatch) Run() {
     t.Finally(func() {})
 }
 
-/**
-如果不需要Finally()请使用Run()
-*/
+// Finally
+// 如果不需要Finally()请使用Run()
 func (t TryCatch) Finally(block func()) TryCatch {
     err := <-t.errChan
     if err != nil {

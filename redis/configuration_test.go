@@ -1,6 +1,5 @@
-/**
-  Create by guoxin 2020.12.14
-*/
+// Package gredis
+// Created by guoxin in 2020/4/13 1:34 下午
 package gredis
 
 import (

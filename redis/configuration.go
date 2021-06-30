@@ -1,6 +1,5 @@
-/*
-   Created by guoxin in 2020/4/13 1:34 下午
-*/
+// Package gredis
+// Created by guoxin in 2020/4/13 1:34 下午
 package gredis
 
 import (
@@ -81,9 +80,8 @@ func (c *Configuration) Initialize(params ...interface{}) interface{} {
     return nil
 }
 
-/**
-通过该方法获得 *redis.Cmdable 对象
-*/
+// GetInstance
+// 通过该方法获得 *redis.Cmdable 对象
 func GetInstance(name string) redis.Cmdable {
     instance := instances.Get(name)
     if instance == nil {
