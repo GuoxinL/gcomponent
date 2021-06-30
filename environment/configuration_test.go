@@ -9,7 +9,9 @@ import (
 
 // test Configuration.Initialize  It's only initialized once
 func TestConfiguration_Initialize(t *testing.T) {
-    _ = core.SetWorkDirectory()
+    if err := core.SetWorkDirectory(); err != nil {
+        t.Error(err)
+    }
     initialize0 := New()
     initialize1 := New()
     if initialize0 != initialize1 {
@@ -18,17 +20,23 @@ func TestConfiguration_Initialize(t *testing.T) {
 }
 
 func TestGetName(t *testing.T) {
-    _ = core.SetWorkDirectory()
-    new(Configuration).Initialize()
-    if name := GetName(); name != "xxx" {
+    if err := core.SetWorkDirectory(); err != nil {
+        t.Error(err)
+    }
+    _ = New()
+    name := GetName();
+    if name != "application_name" {
         t.Error("Expected: xxx\nActual:", name)
     }
+    t.Log(name)
 }
 
 // Test for repeated loading
 func TestGetProfile(t *testing.T) {
-    _ = core.SetWorkDirectory()
-    new(Configuration).Initialize()
+    if err := core.SetWorkDirectory(); err != nil {
+        t.Error(err)
+    }
+    _ = New()
     if profile := GetProfile(); profile != "dev" {
         t.Error("Expected: xxx\nActual:", profile)
     }

@@ -12,7 +12,7 @@ func TestConfiguration_Initialize(t *testing.T) {
     if err := core.SetWorkDirectory(); err != nil {
         t.Error(err)
     }
-    new(Configuration).Initialize()
+    New()
 
     zap.L().Info("我是一条日志，我是一条日志，我是一条日志")
 }

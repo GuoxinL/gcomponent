@@ -29,7 +29,7 @@ func New() interface{} {
 
 var instance Configuration
 
-// The properties that Application has, If the future properties out more application-specific properties put in here
+// Application The properties that Application has, If the future properties out more application-specific properties put in here
 type Application struct {
     Name    string `mapstructure:"name"`
     Profile string `mapstructure:"profile"`

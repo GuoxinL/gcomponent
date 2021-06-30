@@ -22,7 +22,7 @@ type Person struct {
 }
 
 func TestGetFieldNames(t *testing.T) {
-    new(environment.Configuration).Initialize()
+    _ = environment.New()
     d := new(Demo)
     names, err := GetFieldNames(d)
     if err != nil {
