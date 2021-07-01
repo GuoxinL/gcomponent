@@ -1,7 +1,7 @@
 /logs
-go.sum
 .idea/
 vendor
 *.sw[op]
 .DS_Store
 *.log
+gcomponent
