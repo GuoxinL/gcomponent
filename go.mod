@@ -1,6 +1,6 @@
 module github.com/GuoxinL/gcomponent
 
-go 1.13
+go 1.16
 
 require (
 	github.com/gin-contrib/zap v0.0.1
