@@ -4,12 +4,13 @@
 package main
 
 import (
-    ggorm "github.com/GuoxinL/gcomponent/gorm"
-    gzap "github.com/GuoxinL/gcomponent/zap"
+	ggin "github.com/GuoxinL/gcomponent/gin"
+	ggorm "github.com/GuoxinL/gcomponent/gorm"
+	gzap "github.com/GuoxinL/gcomponent/zap"
 )
 
 func main() {
-    gzap.New()
-    ggorm.New()
-
+	gzap.New()
+	ggorm.New()
+	ggin.New()
 }

@@ -3,103 +3,109 @@
 package environment
 
 import (
-    "flag"
-    "fmt"
-    "github.com/GuoxinL/gcomponent/core"
-    "github.com/gobike/envflag"
+	"flag"
+	"fmt"
+	"github.com/GuoxinL/gcomponent/core"
+	"github.com/gobike/envflag"
 )
 
 const (
-    YAML            = "yaml"
-    APPLICATION     = "application"
-    ConfigDirectory = "conf"
+	YAML            = "yaml"
+	APPLICATION     = "application"
+	ConfigDirectory = "conf"
 
-    DefaultProfile        = "dev"
-    DefaultConfigFileName = APPLICATION + core.S + YAML
+	DefaultProfile        = "dev"
+	DefaultConfigFileName = APPLICATION + core.S + YAML
 )
 
 var initializeLock = core.NewInitLock()
 
 func New() interface{} {
-    c := &Configuration{
-        InitializeLock: initializeLock,
-    }
-    return c.Initialize()
+	c := &Configuration{
+		InitializeLock: initializeLock,
+	}
+	return c.Initialize()
 }
 
 var instance Configuration
 
 // Application The properties that Application has, If the future properties out more application-specific properties put in here
 type Application struct {
-    Name    string `mapstructure:"name"`
-    Profile string `mapstructure:"profile"`
+	Name      string `mapstructure:"name"`
+	Profile   string `mapstructure:"profile"`
+	RequestId bool   `mapstructure:"request_id"`
 }
 
 type Configuration struct {
-    // Make sure you only initialize it once
-    core.InitializeLock
-    // configuration file
-    configurationFile *ApplicationFile
-    // Application properties
-    application Application
+	// Make sure you only initialize it once
+	core.InitializeLock
+	// configuration file
+	configurationFile *ApplicationFile
+	// Application properties
+	application Application
 }
 
 func (c *Configuration) Initialize(params ...interface{}) interface{} {
-    if c.IsInit() {
-        return &instance
-    }
-    // Environment variables
-    profile := *flag.String("profile", "", "Allowing us to map our beans to different profiles")
-    directoryName := *flag.String("dir", ConfigDirectory, "The directory where the configuration files are located")
-    envflag.Parse()
+	if c.IsInit() {
+		return &instance
+	}
+	// Environment variables
+	profile := *flag.String("profile", "", "Allowing us to map our beans to different profiles")
+	directoryName := *flag.String("dir", ConfigDirectory, "The directory where the configuration files are located")
+	envflag.Parse()
 
-    // Application init
-    c.configurationFile = newApplicationFile(profile, directoryName)
-    application := Application{}
-    if err := c.configurationFile.UnmarshalKey("components.application", &application); err != nil {
-        fmt.Println("Parse environment.Application exception")
-        application.Name = "wuming"
-    }
-    c.application = application
+	// Application init
+	c.configurationFile = newApplicationFile(profile, directoryName)
+	application := Application{}
+	if err := c.configurationFile.UnmarshalKey("components.application", &application); err != nil {
+		fmt.Println("Parse environment.Application exception")
+		application.Name = "wuming"
+	}
+	c.application = application
 
-    instance = *c
-    return &instance
+	instance = *c
+	return &instance
 }
 
 func IsProfile(profile string) bool {
-    return instance.application.Profile == profile
+	return instance.application.Profile == profile
 }
 
 // GetProfile Get the configuration profile
 func GetProfile() string {
-    return instance.application.Profile
+	return instance.application.Profile
+}
+
+// IsRequestId Get the configuration profile
+func IsRequestId() bool {
+	return instance.application.RequestId
 }
 
 // GetName Get the configuration profile
 func GetName() string {
-    if len(instance.application.Name) != 0 {
-        return instance.application.Name
-    }
-    return "gcomponent-service"
+	if len(instance.application.Name) != 0 {
+		return instance.application.Name
+	}
+	return "gcomponent-service"
 }
 
 // GetProperty Get the configuration in application.yaml under the current environment directory
 func GetProperty(prefix string, config interface{}) error {
-    if len(prefix) == 0 {
-        err := instance.configurationFile.Unmarshal(&config)
-        if err != nil {
-            return err
-        }
-        return nil
-    }
-    err := instance.configurationFile.UnmarshalKey(prefix, &config)
-    if err != nil {
-        return err
-    }
-    return nil
+	if len(prefix) == 0 {
+		err := instance.configurationFile.Unmarshal(&config)
+		if err != nil {
+			return err
+		}
+		return nil
+	}
+	err := instance.configurationFile.UnmarshalKey(prefix, &config)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // GetApplicationFile Get the configuration directory application.yaml viper.Viper
 func GetApplicationFile() *ApplicationFile {
-    return instance.configurationFile
+	return instance.configurationFile
 }

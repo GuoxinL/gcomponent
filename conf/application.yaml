@@ -31,6 +31,7 @@ components:
           IdleCheckFrequency: 60 # 闲置检查
   zap:
     addCallerSkip: 0
+    requestId: true
     console:
       enable: true
       level: debug

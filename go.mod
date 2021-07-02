@@ -3,8 +3,8 @@ module github.com/GuoxinL/gcomponent
 go 1.16
 
 require (
-	github.com/gin-contrib/zap v0.0.1
 	github.com/gin-gonic/gin v1.6.3
+	github.com/go-eden/routine v0.0.1
 	github.com/gobike/envflag v0.0.0-20160830095501-ae3268980a29
 	github.com/google/uuid v1.1.2
 	github.com/mitchellh/mapstructure v1.2.2 // indirect
@@ -18,7 +18,6 @@ require (
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/spf13/viper v1.7.1
-	github.com/stretchr/testify v1.5.1 // indirect
 	go.uber.org/atomic v1.7.0
 	go.uber.org/multierr v1.6.0 // indirect
 	go.uber.org/zap v1.15.0
