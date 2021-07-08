@@ -40,6 +40,7 @@ func (c *Configuration) Initialize(params ...interface{}) interface{} {
 	if c.IsInit() {
 		return &instances
 	}
+	environment.New()
 	gzap.New()
 	logger := gzap.GetInstance()
 	err := environment.GetProperty("components.gorm", &c)

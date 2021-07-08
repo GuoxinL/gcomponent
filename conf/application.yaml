@@ -29,6 +29,19 @@ components:
           PoolTimeout: 5 # 连接池超时
           IdleTimeout: 5
           IdleCheckFrequency: 60 # 闲置检查
+        Network: tcp
+        Addr: 127.0.0.1:6379
+        Password:
+        DB: 0
+        MaxRedirects: 0
+        DialTimeout: 10
+        ReadTimeout: 10
+        WriteTimeout: 10
+        PoolSize: 15 # 连接池容量
+        PoolTimeout: 5 # 连接池超时
+        IdleTimeout: 5
+        IdleCheckFrequency: 60 # 闲置检查
+        ReadOnly: false
   zap:
     addCallerSkip: 0
     requestId: true
@@ -69,8 +82,8 @@ components:
     dataSources:
       - name: test
         database: test
-        username: root
-        password: root
+        username: test
+        password: test
         url: localhost:3306
         MaxIdleConns: 100
         MaxOpenConns: 10

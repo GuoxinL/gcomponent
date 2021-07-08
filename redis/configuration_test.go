@@ -3,23 +3,22 @@
 package gredis
 
 import (
-    "fmt"
-    "github.com/GuoxinL/gcomponent/core"
-    "testing"
+	"fmt"
+	"github.com/GuoxinL/gcomponent/core"
+	"testing"
 )
 
 func TestGetInstance(t *testing.T) {
-    t.Skipf("Skipping testing in CI environment")
-    if err := core.SetWorkDirectory(); err != nil {
-        t.Error(err)
-    }
-    New()
-    instance := GetInstance("root")
-    instance.Get("xxx")
+	if err := core.SetWorkDirectory(); err != nil {
+		t.Error(err)
+	}
+	New()
+	instance := GetInstance("root")
+	instance.Get("xxx")
 }
 
 func TestXxx(t *testing.T) {
-    var initLock bool
+	var initLock bool
 
-    fmt.Println(initLock)
+	fmt.Println(initLock)
 }
